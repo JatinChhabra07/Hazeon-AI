@@ -588,13 +588,148 @@ tbody tr:hover { background: var(--bg-elevated); }
 /* ── Area chart tooltip fix ──────────────────────────── */
 .recharts-tooltip-wrapper { outline: none !important; }
 
+/* ── Responsive Grid Utilities ───────────────────────── */
+.grid-resp-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+.grid-resp-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.grid-resp-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* ── Topbar page title (mobile only) ─────────────────── */
+.topbar-page-title { display: none; }
+
+/* ── Mobile Sidebar Overlay ──────────────────────────── */
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65); z-index: 49;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+/* ── Hamburger Button ────────────────────────────────── */
+.hamburger-btn {
+  display: none; align-items: center; justify-content: center;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-secondary); padding: 6px;
+  border-radius: var(--radius-md); transition: all var(--transition);
+  flex-shrink: 0;
+}
+.hamburger-btn:hover { background: var(--bg-elevated); color: var(--text-primary); }
+
+/* ── Welcome Banner Layout ───────────────────────────── */
+.welcome-inner { display: flex; align-items: flex-start; justify-content: space-between; position: relative; }
+.welcome-cta   { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+.welcome-btn   { min-width: 168px; }
+.pills-row     { display: flex; flex-wrap: wrap; }
+
+/* ── Landing Nav ─────────────────────────────────────── */
+.landing-nav-links { display: flex; align-items: center; gap: 20px; }
+.mobile-nav-btn {
+  display: none; background: none; border: none; cursor: pointer;
+  color: var(--text-primary); padding: 6px; border-radius: var(--radius-md);
+  transition: all var(--transition);
+}
+.mobile-nav-btn:hover { background: var(--bg-elevated); }
+.landing-mobile-menu {
+  display: none; position: fixed;
+  top: 62px; left: 0; right: 0;
+  background: var(--bg-surface); border-bottom: 1px solid var(--border);
+  padding: 12px 20px; z-index: 98; flex-direction: column; gap: 2px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  animation: slideUp 0.2s ease-out;
+}
+.landing-mobile-menu.open { display: flex; }
+.landing-mobile-item {
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  color: var(--text-secondary); font-size: 0.95rem; font-weight: 500;
+  padding: 10px 4px; text-align: left; border-radius: var(--radius-md);
+  transition: color var(--transition);
+}
+.landing-mobile-item:hover { color: var(--text-primary); }
+
+/* ── Responsive Section Padding ─────────────────────── */
+.section-padded    { padding: 80px 48px; }
+.section-padded-sm { padding: 20px 48px; }
+.landing-footer-bar { padding: 24px 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); }
+
+/* ── Tablet (≤1280px) ────────────────────────────────── */
+@media (max-width: 1280px) {
+  .grid-resp-4 { grid-template-columns: repeat(2,1fr); }
+}
+
+/* ── Tablet (≤1024px) ────────────────────────────────── */
+@media (max-width: 1024px) {
+  .sidebar { width: 200px; min-width: 200px; }
+  .grid-resp-3 { grid-template-columns: repeat(2,1fr); }
+  .scroll-area { padding: 20px 24px; }
+}
+
+/* ── Mobile (≤768px) ─────────────────────────────────── */
 @media (max-width: 768px) {
-  .sidebar { display: none; }
+  /* Sidebar — slide-in overlay */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 260px !important; min-width: 260px !important;
+    z-index: 50; transform: translateX(-100%);
+    transition: transform var(--transition-slow);
+    box-shadow: var(--shadow-lg);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay { display: block; opacity: 0; pointer-events: none; transition: opacity var(--transition-slow); }
+  .sidebar-overlay.open { opacity: 1; pointer-events: all; }
+
+  /* Hamburger */
+  .hamburger-btn { display: flex; }
+
+  /* Topbar */
+  .topbar { padding: 0 16px; gap: 8px; }
+  .topbar-breadcrumb { display: none; }
+  .search-box { display: none; }
+  .badge-accent { display: none; }
+  .topbar-page-title { display: block; }
+
+  /* Main content */
   .scroll-area { padding: 16px; }
-  .grid-4,.grid-3,.grid-2 { grid-template-columns: 1fr; }
+
+  /* Standard grids */
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+
+  /* Responsive grids */
+  .grid-resp-4, .grid-resp-3 { grid-template-columns: 1fr 1fr; }
+  .grid-resp-2 { grid-template-columns: 1fr; }
+
+  /* Welcome banner */
+  .welcome-inner { flex-direction: column; gap: 20px; }
+  .welcome-cta { flex-direction: row; width: 100%; }
+  .welcome-cta .btn { flex: 1; min-width: 0; }
+  .welcome-btn { min-width: 0; }
+
+  /* Pills row */
+  .pills-row { gap: 16px; }
+
+  /* Landing */
+  .landing-nav { padding: 0 20px; }
+  .landing-nav-links { display: none; }
+  .mobile-nav-btn { display: flex; align-items: center; }
+  .landing-hero { padding: 80px 20px 56px !important; }
+  .section-padded { padding: 56px 20px; }
+  .section-padded-sm { padding: 16px 20px; }
+  .landing-footer-bar { padding: 20px; flex-direction: column; gap: 10px; text-align: center; }
+  .hero-title { font-size: 2.2rem; }
   .feature-grid { grid-template-columns: 1fr; padding: 0 20px 56px; }
-  .hero-title { font-size: 2rem; }
   .pipeline-timeline { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; }
   .timeline-connector { display: none; }
+  .comparison-header,
+  .comparison-row { grid-template-columns: 1.5fr 1fr 1fr; }
+}
+
+/* ── Small Mobile (≤480px) ───────────────────────────── */
+@media (max-width: 480px) {
+  .grid-resp-4, .grid-resp-3, .grid-resp-2 { grid-template-columns: 1fr; }
+  .welcome-cta { flex-direction: column; }
+  .hero-title { font-size: 1.8rem; }
+  .scroll-area { padding: 12px; }
+  .topbar { padding: 0 12px; }
+  .section-padded { padding: 40px 16px; }
+  .landing-hero { padding: 72px 16px 48px !important; }
+  .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
 }

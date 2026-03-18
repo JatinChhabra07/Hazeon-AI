@@ -33,7 +33,7 @@ const NAV = [
   },
 ];
 
-export default function Sidebar({ user, activePage, setActivePage, onLogout }) {
+export default function Sidebar({ user, activePage, setActivePage, onLogout, isOpen, onClose }) {
   const navigate = useNavigate();
   const initials = user?.full_name
     ?.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() || 'U';
@@ -45,7 +45,9 @@ export default function Sidebar({ user, activePage, setActivePage, onLogout }) {
   }[user?.role] || 'User';
 
   return (
-    <aside className="sidebar">
+    <>
+    {isOpen && <div className={`sidebar-overlay open`} onClick={onClose} />}
+    <aside className={`sidebar${isOpen ? ' open' : ''}`}>
       <div className="sidebar-logo">
         <div className="logo-mark" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
           <div className="logo-icon">HZ</div>
@@ -86,5 +88,6 @@ export default function Sidebar({ user, activePage, setActivePage, onLogout }) {
         </div>
       </div>
     </aside>
+    </>
   );
 }

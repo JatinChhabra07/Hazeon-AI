@@ -243,7 +243,7 @@ export default function DashboardPage({ user, onNavigate }) {
         <div style={{ position: 'absolute', right: -40, top: -40, width: 220, height: 220, borderRadius: '50%', background: 'radial-gradient(circle, rgba(79,125,255,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', right: 80, bottom: -50, width: 150, height: 150, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'relative' }}>
+        <div className="welcome-inner">
           <div>
             {/* Status + date row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
@@ -272,7 +272,7 @@ export default function DashboardPage({ user, onNavigate }) {
             </div>
 
             {/* Key metrics row */}
-            <div style={{ display: 'flex', gap: 0 }}>
+            <div className="pills-row">
               {pills.map((pill, i) => (
                 <div key={pill.label} style={{
                   display: 'flex', flexDirection: 'column', gap: 3,
@@ -288,11 +288,11 @@ export default function DashboardPage({ user, onNavigate }) {
           </div>
 
           {/* CTA buttons */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, flexShrink: 0 }}>
-            <button className="btn btn-primary" style={{ minWidth: 168, fontWeight: 600 }} onClick={() => onNavigate?.('upload')}>
+          <div className="welcome-cta">
+            <button className="btn btn-primary welcome-btn" style={{ fontWeight: 600 }} onClick={() => onNavigate?.('upload')}>
               <Upload size={14} /> Evaluate Answer
             </button>
-            <button className="btn btn-secondary" style={{ minWidth: 168, fontWeight: 600 }} onClick={() => onNavigate?.('submissions')}>
+            <button className="btn btn-secondary welcome-btn" style={{ fontWeight: 600 }} onClick={() => onNavigate?.('submissions')}>
               <FileText size={14} /> View History
             </button>
           </div>
@@ -300,7 +300,7 @@ export default function DashboardPage({ user, onNavigate }) {
       </div>
 
       {/* ══ QUICK ACTIONS ═════════════════════════════════════ */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 22 }}>
+      <div className="grid-resp-4" style={{ marginBottom: 22 }}>
         {[
           { icon: Cpu,      label: 'Evaluate Answer', sub: 'Upload & get AI feedback',  color: '#4f7dff', badge: 'AI',  page: 'upload' },
           { icon: BookOpen, label: 'PYQ Bank',        sub: 'Practice past questions',   color: '#00d4ff', badge: null,  page: 'pyq' },
@@ -346,7 +346,7 @@ export default function DashboardPage({ user, onNavigate }) {
 
       {/* ══ STATS ROW ═════════════════════════════════════════ */}
       {isAdmin ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 22 }}>
+        <div className="grid-resp-4" style={{ marginBottom: 22 }}>
           <StatCard label="Total Students"   value={data?.total_students || 0}   icon={<Users size={15}/>}        color="#4f7dff" change="+3 this month" changeUp />
           <StatCard label="Total Submissions" value={data?.total_submissions || 0} icon={<FileText size={15}/>}   color="#00d4ff" change="Across all batches" />
           <StatCard label="Evaluated"         value={data?.total_evaluated || 0}   icon={<CheckCircle2 size={15}/>} color="#10b981"
@@ -354,7 +354,7 @@ export default function DashboardPage({ user, onNavigate }) {
           <StatCard label="Avg Score"         value={`${(data?.average_score || 0).toFixed(1)}/10`} icon={<Award size={15}/>} color="#f59e0b" change="Batch average" />
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 22 }}>
+        <div className="grid-resp-4" style={{ marginBottom: 22 }}>
           <StatCard label="Answers Written"  value={data?.total_submissions || 0} icon={<FileText size={15}/>}   color="#4f7dff" />
           <StatCard label="Avg Score"        value={`${(Object.values(data?.parameter_averages || {}).reduce((a,b)=>a+b,0) / (Object.values(data?.parameter_averages || {}).length || 1)).toFixed(1)}/10`}
                     icon={<Award size={15}/>} color="#10b981" />
@@ -366,7 +366,7 @@ export default function DashboardPage({ user, onNavigate }) {
       {isAdmin ? (
         <>
           {/* ══ CHARTS ROW ════════════════════════════════════ */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 22 }}>
+          <div className="grid-resp-2" style={{ marginBottom: 22 }}>
 
             {/* Subject Performance */}
             <div style={{ background: '#0e1420', border: '1px solid #1e2d45', borderRadius: 12, padding: '20px 22px' }}>
@@ -414,7 +414,7 @@ export default function DashboardPage({ user, onNavigate }) {
           </div>
 
           {/* ══ BOTTOM ROW ════════════════════════════════════ */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 22 }}>
+          <div className="grid-resp-2" style={{ marginBottom: 22 }}>
 
             {/* Top Performers */}
             <div style={{ background: '#0e1420', border: '1px solid #1e2d45', borderRadius: 12, padding: '20px 22px' }}>
@@ -490,7 +490,7 @@ export default function DashboardPage({ user, onNavigate }) {
               <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#e8edf5', margin: 0 }}>AI Insights</h3>
               <span style={{ fontSize: '0.62rem', fontWeight: 700, padding: '2px 8px', borderRadius: 10, background: 'rgba(79,125,255,0.12)', color: '#4f7dff', border: '1px solid rgba(79,125,255,0.25)' }}>Powered by Gemini</span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+            <div className="grid-resp-3">
               {AI_INSIGHTS.map(insight => (
                 <div key={insight.title} style={{
                   background: '#0e1420', borderRadius: 12,
@@ -512,7 +512,7 @@ export default function DashboardPage({ user, onNavigate }) {
       ) : (
         /* ══ STUDENT VIEW ═════════════════════════════════════ */
         <>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 22 }}>
+          <div className="grid-resp-2" style={{ marginBottom: 22 }}>
 
             {/* Score Trend */}
             <div style={{ background: '#0e1420', border: '1px solid #1e2d45', borderRadius: 12, padding: '20px 22px' }}>
@@ -560,7 +560,7 @@ export default function DashboardPage({ user, onNavigate }) {
           </div>
 
           {/* Recent Evaluations + Goal Card */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 22 }}>
+          <div className="grid-resp-2" style={{ marginBottom: 22 }}>
 
             <div style={{ background: '#0e1420', border: '1px solid #1e2d45', borderRadius: 12, padding: '20px 22px' }}>
               <SectionHeader title="Recent Evaluations" action="All Submissions" onAction={() => onNavigate?.('submissions')} />
@@ -619,7 +619,7 @@ export default function DashboardPage({ user, onNavigate }) {
               <Activity size={15} style={{ color: '#4f7dff' }} />
               <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#e8edf5', margin: 0 }}>AI Insights</h3>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+            <div className="grid-resp-3">
               {[
                 { icon: TrendingDown, color: '#ef4444', title: 'Weakest Area',  desc: 'Your Conclusion scores average 5.4. Add a structured "Way Forward" paragraph every time.' },
                 { icon: AlertTriangle,color: '#f59e0b', title: 'Keyword Gap',   desc: "You're missing 40% of expected keywords on average. Study the PYQ model answers closely." },

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Search, Bell, Zap, Settings } from 'lucide-react';
+import { Search, Bell, Zap, Menu } from 'lucide-react';
 import './index.css';
 
 import LandingPage    from './components/LandingPage';
@@ -21,8 +21,9 @@ import QuestionsPage   from './components/QuestionsPage';
 export default function App() {
   const [user, setUser]             = useState(null);
   const [loading, setLoading]       = useState(true);
-  const [activePage, setActivePage] = useState('dashboard');
-  const [notifications]             = useState(3);
+  const [activePage, setActivePage]   = useState('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [notifications]               = useState(3);
 
   useEffect(() => {
     const saved = localStorage.getItem('hazeon_user');
@@ -93,15 +94,25 @@ export default function App() {
               <Sidebar
                 user={user}
                 activePage={activePage}
-                setActivePage={setActivePage}
+                setActivePage={(p) => { setActivePage(p); setSidebarOpen(false); }}
                 onLogout={handleLogout}
+                isOpen={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
               />
               <div className="main-content">
                 <header className="topbar">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.85rem' }}>
-                    <span style={{ color: 'var(--text-muted)' }}>Hazeon</span>
-                    <span style={{ color: 'var(--text-muted)' }}>/</span>
-                    <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{PAGE_NAMES[activePage]}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <button className="hamburger-btn" onClick={() => setSidebarOpen(true)}>
+                      <Menu size={20} />
+                    </button>
+                    <div className="topbar-breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.85rem' }}>
+                      <span style={{ color: 'var(--text-muted)' }}>Hazeon</span>
+                      <span style={{ color: 'var(--text-muted)' }}>/</span>
+                      <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{PAGE_NAMES[activePage]}</span>
+                    </div>
+                    <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }} className="topbar-page-title">
+                      {PAGE_NAMES[activePage]}
+                    </span>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>

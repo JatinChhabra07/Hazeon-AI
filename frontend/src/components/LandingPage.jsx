@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Zap, Brain, BarChart3, ArrowRight, CheckCircle2,
   FileText, Target, Upload, Cpu, Sparkles, ChevronDown,
-  Star, X, Check,
+  Star, X, Check, Menu,
   Globe, Database
 } from 'lucide-react';
 
@@ -106,7 +106,8 @@ const INSTITUTES = ['Drishti IAS', 'Vision HCS', 'Lakshya IAS', 'Forum IAS', 'Va
 /* ── Component ────────────────────────────────────────────── */
 export default function LandingPage() {
   const navigate = useNavigate();
-  const [openFaq, setOpenFaq] = useState(null);
+  const [openFaq, setOpenFaq]           = useState(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const featuresRef  = useRef(null);
   const howRef       = useRef(null);
   const pricingRef   = useRef(null);
@@ -124,7 +125,9 @@ export default function LandingPage() {
             <div className="logo-sub">UPSC · HCS Evaluator</div>
           </div>
         </div>
-        <div className="flex items-center gap-4" style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+
+        {/* Desktop nav */}
+        <div className="landing-nav-links">
           <button className="landing-nav-link" onClick={() => scrollTo(featuresRef)}>Features</button>
           <button className="landing-nav-link" onClick={() => scrollTo(howRef)}>How it Works</button>
           <button className="landing-nav-link" onClick={() => scrollTo(pricingRef)}>Pricing</button>
@@ -134,7 +137,24 @@ export default function LandingPage() {
             Get Started <ArrowRight size={13} />
           </button>
         </div>
+
+        {/* Mobile hamburger */}
+        <button className="mobile-nav-btn" onClick={() => setMobileNavOpen(o => !o)}>
+          {mobileNavOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </nav>
+
+      {/* Mobile nav dropdown */}
+      <div className={`landing-mobile-menu${mobileNavOpen ? ' open' : ''}`}>
+        <button className="landing-mobile-item" onClick={() => { scrollTo(featuresRef); setMobileNavOpen(false); }}>Features</button>
+        <button className="landing-mobile-item" onClick={() => { scrollTo(howRef); setMobileNavOpen(false); }}>How it Works</button>
+        <button className="landing-mobile-item" onClick={() => { scrollTo(pricingRef); setMobileNavOpen(false); }}>Pricing</button>
+        <div style={{ height: 1, background: 'var(--border)', margin: '8px 0' }} />
+        <button className="btn btn-ghost btn-sm w-full" style={{ justifyContent: 'flex-start' }} onClick={() => { navigate('/login'); setMobileNavOpen(false); }}>Login</button>
+        <button className="btn btn-primary btn-sm w-full mt-2" onClick={() => { navigate('/login'); setMobileNavOpen(false); }}>
+          Get Started <ArrowRight size={13} />
+        </button>
+      </div>
 
       {/* ── Hero ───────────────────────────────────────────── */}
       <div className="landing-hero" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -192,7 +212,7 @@ export default function LandingPage() {
       </div>
 
       {/* ── Trust Bar ──────────────────────────────────────── */}
-      <div style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '20px 48px', textAlign: 'center' }}>
+      <div className="section-padded-sm" style={{ borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', textAlign: 'center' }}>
         <div style={{ fontSize: '0.7rem', color: 'var(--text-disabled)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 16 }}>
           Trusted by coaching institutes across Haryana & Punjab
         </div>
@@ -204,7 +224,7 @@ export default function LandingPage() {
       </div>
 
       {/* ── How It Works ───────────────────────────────────── */}
-      <div ref={howRef} style={{ maxWidth: 1080, margin: '0 auto', padding: '80px 48px' }}>
+      <div ref={howRef} className="section-padded" style={{ maxWidth: 1080, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <div className="section-eyebrow">How It Works</div>
           <h2 style={{ fontSize: '1.9rem', fontWeight: 700, marginBottom: 12 }}>
@@ -233,7 +253,7 @@ export default function LandingPage() {
       </div>
 
       {/* ── Features ───────────────────────────────────────── */}
-      <div ref={featuresRef} style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '80px 48px' }}>
+      <div ref={featuresRef} className="section-padded" style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ textAlign: 'center', marginBottom: 48, maxWidth: 1080, margin: '0 auto 48px' }}>
           <div className="section-eyebrow">Features</div>
           <h2 style={{ fontSize: '1.9rem', fontWeight: 700 }}>Everything an institute needs</h2>
@@ -252,7 +272,7 @@ export default function LandingPage() {
       </div>
 
       {/* ── Comparison Table ───────────────────────────────── */}
-      <div style={{ maxWidth: 800, margin: '0 auto', padding: '80px 48px' }}>
+      <div className="section-padded" style={{ maxWidth: 800, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <div className="section-eyebrow">Why Switch</div>
           <h2 style={{ fontSize: '1.9rem', fontWeight: 700 }}>Hazeon vs Human Evaluator</h2>
@@ -280,7 +300,7 @@ export default function LandingPage() {
       </div>
 
       {/* ── Pricing ────────────────────────────────────────── */}
-      <div ref={pricingRef} style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '80px 48px' }}>
+      <div ref={pricingRef} className="section-padded" style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <div className="section-eyebrow">Pricing</div>
           <h2 style={{ fontSize: '1.9rem', fontWeight: 700 }}>Simple, institute-friendly pricing</h2>
@@ -318,12 +338,12 @@ export default function LandingPage() {
       </div>
 
       {/* ── Testimonials ───────────────────────────────────── */}
-      <div style={{ maxWidth: 1080, margin: '0 auto', padding: '80px 48px' }}>
+      <div className="section-padded" style={{ maxWidth: 1080, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <div className="section-eyebrow">Testimonials</div>
           <h2 style={{ fontSize: '1.9rem', fontWeight: 700 }}>What institutes and toppers say</h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+        <div className="grid-resp-3" style={{ gap: 20 }}>
           {TESTIMONIALS.map(t => (
             <div key={t.name} className="testimonial-card">
               <div style={{ display: 'flex', gap: 2, marginBottom: 14 }}>
@@ -352,7 +372,7 @@ export default function LandingPage() {
       </div>
 
       {/* ── FAQ ────────────────────────────────────────────── */}
-      <div style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '80px 48px' }}>
+      <div className="section-padded" style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
             <div className="section-eyebrow">FAQ</div>
@@ -379,7 +399,7 @@ export default function LandingPage() {
       </div>
 
       {/* ── Footer ─────────────────────────────────────────── */}
-      <div style={{ borderTop: '1px solid var(--border)', padding: '24px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="landing-footer-bar">
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div className="logo-icon" style={{ width: 24, height: 24, fontSize: '0.6rem' }}>HZ</div>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>© 2026 Hazeon AI. All rights reserved.</span>
