@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m scripts.build_training_dataset)",
+      "Bash(python -m pytest tests/ -v)",
+      "Bash(python scripts/upsc_25year_bank.py)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(python -c \":*)",
+      "Bash(python -c \"import json; lines=open\\(''e:/Demo-Work/backend/scripts/training_data/upsc_eval_dataset.jsonl''\\).readlines\\(\\); scores=[json.loads\\(l\\)[''output''] for l in lines[:5]]; [print\\(json.loads\\(s\\).get\\(''overall_score''\\), json.loads\\(s\\).get\\(''marks_obtained''\\)\\) for s in scores]\")",
+      "Bash(echo EXIT:$?)",
+      "Bash(python -m pytest tests/ -v --tb=short)",
+      "Bash(python -c \"from app.config import settings; print\\(''Config OK:'', settings.APP_NAME, ''| Groq key set:'', bool\\(settings.GROQ_API_KEY\\)\\)\")",
+      "Bash(python -c \"import fastapi; print\\(''ok''\\)\")",
+      "Bash(python -c \"import passlib; print\\(''ok''\\)\")",
+      "Bash(python -c \"import sqlalchemy; print\\(''ok''\\)\")",
+      "Bash(python -c \"import greenlet; print\\(''greenlet:'', greenlet.__version__\\)\")"
+    ]
+  }
+}
